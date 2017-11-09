@@ -1,0 +1,16 @@
+{
+  "name": "ui5server",
+  "version": "1.0.0",
+  "description": "Server for UI5 Apps",
+  "main": "node_server.js",
+  "author": "peter.orgon@ui5flow.com",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "compression": "^1.6.2",
+    "express": "^4.15.2",
+    "express-session": "^1.15.4",
+    "http-proxy": "^1.16.2",
+    "path": "^0.12.7"
+  }
+}
