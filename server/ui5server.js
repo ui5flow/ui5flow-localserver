@@ -4,53 +4,36 @@ const compression = require('compression');
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
 const https = require('https');
-const session = require('express-session');
 const routes = require('express').Router();
+const serverConfig = require("./config.json");
 
-var proxyConf = {
-    services: [{
-        url: '',
-        originProxyPartPath: '',
-        targetProxyPartPath: '',
-        targetHost: '',
-        csrfEnabled: true,
-        targetHeaders: {
-        }
-    }
-    ]
-}
+var config = serverConfig;
 
 try {
-    var port = '8010';
-    var appsDir = 'ui5apps';
-    var proxyTarget = false;
-    var proxyHost = '';
+    var port = config.port;
+    var appsDir = config.appsDir;
 
     var app = express();
+
     app.use(compression());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
+
     app.use(express.static(path.join(__dirname, '..', appsDir)));
 
     var proxy = httpProxy.createProxyServer({});
 
     var target = '';
-
     proxy.on('proxyReq', function(proxyReq, req, res, options) {
         proxyReq.path = target;
-        /*
-        Http-proxy has a problem with using body-parser supposedly because it parses the body 
-        as a stream and never closes it so the proxy never never completes the request.
-        Therefore there is following workaround necessary.
-        */
-        if (req.get('Content-Type') == 'application/json' || req.get('content-type') == 'application/json') {
+
+        if(req.is('application/json')) {
             if (req.body) {
                 var bodyData = JSON.stringify(req.body);
 
                 proxyReq.setHeader('Content-Type', 'application/json');
                 proxyReq.setHeader('Content-Length', Buffer.byteLength(bodyData));
 
-                // stream the content
                 proxyReq.write(bodyData);
             }
         }
@@ -58,17 +41,14 @@ try {
 
 
     proxy.on('error', function(err, preq, pres) {
-        /*
-        pres.writeHead(500, { 'Content-Type': 'text/plain' });
-        pres.write("An error happened at server. Please contact your administrator.");
-        pres.end();
-        */
+        console.log('Proxy error: \n', err);
     });
 
+    var proxyHost = '';
+    var proxyTarget = false;    
     routes.route(/^\/(.+)/).all(function(req, res, next) {
 
-
-        proxyTarget = proxyConf.services.find(function(service) {
+        proxyTarget = config.services.find(function(service) {
             return req.url.includes(service.url);
         });
 
@@ -77,10 +57,6 @@ try {
                 var urlPath = req.url.replace(proxyTarget.originProxyPartPath, proxyTarget.targetProxyPartPath);
                 proxyHost = proxyTarget.targetHost;
                 target = proxyHost + urlPath;
-
-                console.log('\nheaders: \n', proxyTarget.targetHeaders);
-                console.log('target: \n', target);
-                //console.log('req: \n', req);
 
                 proxy.web(req, res, {
                     target: target,
@@ -103,7 +79,7 @@ try {
     app.use('/', routes);
     app.listen(port);
 
-    console.log('Listening on port %s ...', port);
+    console.log('UI5 Server listening on port %s ...', port);
 } catch (err) {
     console.log('Somehing bad happened ... \n', err);
 }

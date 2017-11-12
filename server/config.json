@@ -1,0 +1,12 @@
+{
+    "port": "8001",
+    "appsDir": "ui5apps",
+    "services": [{
+        "url": "",
+        "originProxyPartPath": "",
+        "targetProxyPartPath": "",
+        "targetHost": "",
+        "targetHeaders": {            
+        }
+    }]
+}
