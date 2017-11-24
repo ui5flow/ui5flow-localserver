@@ -1,12 +1,11 @@
 {
-    "port": "8001",
+    "port": "8000",
     "appsDir": "ui5apps",
-    "services": [{
-        "url": "",
-        "originProxyPartPath": "",
-        "targetProxyPartPath": "",
+    "services": [
+    {
+        "path": "",
+        "pathRewrite": {},
         "targetHost": "",
-        "targetHeaders": {            
-        }
+        "targetHeaders": {}
     }]
 }
