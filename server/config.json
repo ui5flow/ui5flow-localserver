@@ -1,11 +1,24 @@
 {
-    "port": "8000",
+    "port": "8001",
     "appsDir": "ui5apps",
     "services": [
-    {
-        "path": "",
-        "pathRewrite": {},
-        "targetHost": "",
-        "targetHeaders": {}
-    }]
+        {
+            "path": "",
+            "pathRewrite":
+            {
+            },
+            "targetHost": "",
+            "targetHeaders": {}
+        },
+        {
+            "path": "resources/",
+            "pathRewrite":
+            {
+                ".+?/resources/": "/resources/"
+            },
+            "targetHost": "https://openui5.hana.ondemand.com",
+            "targetHeaders": {}
+        }
+
+    ]
 }

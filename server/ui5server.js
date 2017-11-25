@@ -13,6 +13,7 @@ var cnsColors = {
   success: '\x1b[32m',
   error: '\x1b[31m',
   warning: '\x1b[33m',
+  default: '\x1b[37m',
   emphasize: '\x1b[1m'
 }
 
@@ -59,11 +60,11 @@ try {
         proxyTarget = config.services.find(function(service) {
             return req.url.includes(service.path);
         });
-
+        
         if (proxyTarget) {
-            if (proxyTarget.path) {
 
-                var targetPath = proxyTarget.path;
+            if (proxyTarget.path) {
+                var targetPath = req.url;
                 if(proxyTarget.pathRewrite) {
                   for (var rewriteKey in proxyTarget.pathRewrite){
                       if (proxyTarget.pathRewrite.hasOwnProperty(rewriteKey)) {
@@ -75,7 +76,7 @@ try {
                               console.log(cnsColors.emphasize, 'Invalid regular expression in "' + rewriteKey + '". Please review your configuration.', cnsColors.reset);
                               return res.status(500).json('Invalid regular expression in ' + rewriteKey + '. Please review your configuration.');  
                           }
-                          targetPath = targetPath.replace(new RegExp( rewriteKey ), proxyTarget.pathRewrite[rewriteKey]);
+                          targetPath = req.url.replace(new RegExp( rewriteKey ), proxyTarget.pathRewrite[rewriteKey]);
                       }
                   } 
                 }
@@ -83,6 +84,7 @@ try {
                 var proxyHost = proxyTarget.targetHost;
                 target = proxyHost + targetPath;
 
+                console.log(cnsColors.warning, 'Proxy path: ', req.url, cnsColors.reset);
                 console.log(cnsColors.emphasize,'Requesting: ', target, cnsColors.reset);
 
                 if (!proxyTarget.targetHeaders) {
@@ -98,9 +100,10 @@ try {
                 });
                
             } else {
+
                 return next();
             }
-        } else {
+        } else {     
             return next();
         }
     });
