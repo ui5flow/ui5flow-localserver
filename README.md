@@ -6,19 +6,24 @@ Publish&Share your applications on [ui5flow.com](https://www.ui5flow.com) using 
 
 ## Configuration
 
-Server configuration
+ui5flow-localserver supports the following configuration options:
 
-```json
+* `port` of your webservice
+* `appsDir` of your webservice
+* `services` array with proxy configuration objects
+
+
+### Server configuration example
+
+```
 {
     "port": "8001",
     "appsDir": "ui5apps",
     "services": [
         {
-            "path": "",
-            "pathRewrite":
-            {
-            },
-            "targetHost": "",
+            "path": "/V4/Northwind/Northwind.svc/",
+            "pathRewrite": {},
+            "targetHost": "http://services.odata.org",
             "targetHeaders": {}
         },
         {
