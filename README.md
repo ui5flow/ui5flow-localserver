@@ -8,9 +8,14 @@ Publish&Share your applications on [ui5flow.com](https://www.ui5flow.com) using 
 
 ui5flow-localserver supports the following configuration options:
 
-* `port` of your webservice
-* `appsDir` of your webservice
-* `services` array with proxy configuration objects
+* `port:` port of the server
+* `appsDir:` string with the name of the directory where your UI5 applications are located
+* `services:` array with proxy configuration objects
+* `path:` path of the of the webservice 
+* `pathRewrite:` option the rewrite the path within the reverse-proxy
+* `targetHost:` target host of the webservice
+* `targetHeaders:` headers to be sent within the request
+
 
 
 ### Server configuration example
