@@ -3,7 +3,6 @@ const path = require('path');
 const compression = require('compression');
 const bodyParser = require('body-parser');
 const httpProxy = require('http-proxy');
-const https = require('https');
 const routes = require('express').Router();
 const serverConfig = require("./config.json");
 
@@ -90,15 +89,14 @@ try {
                 if (!proxyTarget.targetHeaders) {
                   proxyTarget.targetHeaders = {};
                 }
-
+            
                 proxy.web(req, res, {
                     target: target,
-                    agent: new https.Agent({ keepAlive: true }),
                     changeOrigin: true,
                     secure: false,
                     headers: proxyTarget.targetHeaders
                 });
-               
+
             } else {
 
                 return next();
