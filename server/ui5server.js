@@ -27,6 +27,7 @@ try {
     app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(express.static(path.join(__dirname, '..', appsDir)));
+    console.log(cnsColors.success, 'UI5 Applications root path: ' + path.join(__dirname, '..', appsDir), cnsColors.reset);
 
     var proxy = httpProxy.createProxyServer({});
     var target = '';
