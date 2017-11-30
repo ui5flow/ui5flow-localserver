@@ -124,10 +124,10 @@ Example:
  -+ myApp2
 ```
 
-2. Start the server by typing `node ui5server` in the command line.
-    > If you have installed the server in the `C:\Users\myUser\UI5Development\` directory and configured `"appsDir":"ui5apps"` then after successful server start you should see folowing lines in your console:
+2. Go to the server directory and start the server by typing `node ui5server` in the command line.
+    > If you have installed the server in the `C:\Users\myUser\UI5Development\ui5flow-localserver` directory and configured `"appsDir":"ui5apps"` then after successful server start you should see folowing lines in your console:
 ```
- UI5 Applications root path: C:\Users\myUser\UI5Development\ui5apps
+ UI5 Applications root path: C:\Users\myUser\UI5Development\ui5flow-localserver\ui5apps
  UI5 Server listening on port 8001 ...
 ```
 
