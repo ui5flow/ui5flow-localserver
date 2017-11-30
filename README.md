@@ -4,23 +4,27 @@ Develop and run your OpenUI5/SAPUI5 applications locally in any code editor you 
  
 Publish&Share your applications on [ui5flow.com](https://www.ui5flow.com) using the same proxy settings used in ui5flow-localserver.
 
+
+
+
 ## Configuration options
+Change the  `conf.js` file to setup the server.
 
 ### port
 Type: `string`  
-Port of the server
+Port of the local server.
 
 ### appsDir
 Type: `string`  
-Name of the directory where your UI5 applications are located
+Name of the directory where your UI5 applications are located. Also relative path may be used.
 
 ### services 
 Type: `array` of `object`  
-Array with proxy configuration objects
+Array with proxy configuration objects.
 
 ### path
 Type: `string`  
-Path of the of the webservice 
+Path of the of the webservice.
 
 ### pathRewrite
 Type: `object`  
@@ -42,12 +46,12 @@ Taget path: `http://services.odata.org/V2/Westwind/` will be requested
 
 
 ```
-...
+  ...
   "pathRewrite": { 
       "/V4/Northwind": "/V2/"
    },
    "targetHost": "http://services.odata.org"
-...
+   ...
 ```
 Original path: `/V4/Northwind/`  
 Taget path: `http://services.odata.org/V2/` will be requested  
@@ -55,12 +59,12 @@ Taget path: `http://services.odata.org/V2/` will be requested
 
 
 ```
-...
+  ...
   "pathRewrite": {
       ".+?/resources/": "/resources/"
   },
   "targetHost": "https://openui5.hana.ondemand.com",
-...
+  ...
 ```
 Original path: `../resources/`  
 Taget path: `https://https://openui5.hana.ondemand.com/resources/` will be requested
@@ -68,13 +72,22 @@ Taget path: `https://https://openui5.hana.ondemand.com/resources/` will be reque
 
 ### targetHost
 Type: `string`
-Target host of the webservice
+Target host of the webservice.
 
-* `targetHeaders:` headers to be sent with the request
+### targetHeaders 
+Type: `object`
+Headers to be sent with the request.  
 
+Example:
+```
+   ...
+   "targetHeaders": {
+       "Authorization": "Basic VVNFUjpQQVNTV09SRA=="
+   }
+   ...            
+```
 
-
-### Server configuration example
+## Configuration example
 
 ```
 {
@@ -101,5 +114,21 @@ Target host of the webservice
 }
 ```
 
-### Path rewrite
+## Usage
+
+1. Copy your OpenUI5/SAPUI5 application into the `"appsDir":"<yourAppsDirectory>` directory. If you have more applications just store them in separated subdirectories.
+```
+ - ui5apps
+ -+ myApp1
+ -+ myApp2
+```
+
+2. Start the server by typing `node ui5server` in the command line type.
+    > If you have installed the server in the `C:\Users\myUser\UI5Development\` directory and you configured `"appsDir":"ui5apps"` then after successful server start you should see folowing lines in your console:
+```
+ UI5 Applications root path: C:\Users\myUser\UI5Development\ui5apps
+ UI5 Server listening on port 8001 ...
+```
+
+3. Type `http://localhost:8001/myApp1` in your browser and the application will start ...
 
