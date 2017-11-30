@@ -27,23 +27,49 @@ Type: `object`
 Option to rewrite the target path. 
 
 Examples:
-Change the target path
-```
-...
-"pathRewrite": {"/V4/Northwind/": "/V2/Westwind/"},
-...
-```
-Original path: `/V4/Northwind/`
-Taget path: `http(s)://tagethost/V2/Westwind/` will be requested
 
 ```
 ...
-"pathRewrite": {"/V4/Northwind": "/V2"},
+  "pathRewrite": {
+       "/V4/Northwind/": "/V2/Westwind/"
+   },
+   "targetHost": "http://services.odata.org"
 ...
 ```
+Original path: `/V4/Northwind/`  
+Taget path: `http://services.odata.org/V2/Westwind/` will be requested  
 
 
-* `targetHost:` target host of the webservice
+
+```
+...
+  "pathRewrite": { 
+      "/V4/Northwind": "/V2/"
+   },
+   "targetHost": "http://services.odata.org"
+...
+```
+Original path: `/V4/Northwind/`  
+Taget path: `http://services.odata.org/V2/` will be requested  
+
+
+
+```
+...
+  "pathRewrite": {
+      ".+?/resources/": "/resources/"
+  },
+  "targetHost": "https://openui5.hana.ondemand.com",
+...
+```
+Original path: `../resources/`  
+Taget path: `https://https://openui5.hana.ondemand.com/resources/` will be requested
+
+
+### targetHost
+Type: `string`
+Target host of the webservice
+
 * `targetHeaders:` headers to be sent with the request
 
 
