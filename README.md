@@ -4,17 +4,47 @@ Develop and run your OpenUI5/SAPUI5 applications locally in any code editor you 
  
 Publish&Share your applications on [ui5flow.com](https://www.ui5flow.com) using the same proxy settings used in ui5flow-localserver.
 
-## Configuration
+## Configuration options
 
-ui5flow-localserver supports the following configuration options:
+### port
+Type: `string`  
+Port of the server
 
-* `port:` port of the server
-* `appsDir:` string with the name of the directory where your UI5 applications are located
-* `services:` array with proxy configuration objects
-* `path:` path of the of the webservice 
-* `pathRewrite:` option the rewrite the path within the reverse-proxy
+### appsDir
+Type: `string`  
+Name of the directory where your UI5 applications are located
+
+### services 
+Type: `array` of `object`  
+Array with proxy configuration objects
+
+### path
+Type: `string`  
+Path of the of the webservice 
+
+### pathRewrite
+Type: `object`  
+Option to rewrite the target path. 
+
+Examples:
+Change the target path
+```
+...
+"pathRewrite": {"/V4/Northwind/": "/V2/Westwind/"},
+...
+```
+Original path: `/V4/Northwind/`
+Taget path: `http(s)://tagethost/V2/Westwind/` will be requested
+
+```
+...
+"pathRewrite": {"/V4/Northwind": "/V2"},
+...
+```
+
+
 * `targetHost:` target host of the webservice
-* `targetHeaders:` headers to be sent within the request
+* `targetHeaders:` headers to be sent with the request
 
 
 
@@ -44,3 +74,6 @@ ui5flow-localserver supports the following configuration options:
     ]
 }
 ```
+
+### Path rewrite
+
